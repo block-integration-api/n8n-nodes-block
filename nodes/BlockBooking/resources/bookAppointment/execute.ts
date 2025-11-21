@@ -1,4 +1,5 @@
 import type { IDataObject, IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+import { NodeOperationError } from 'n8n-workflow';
 import { blockApiRequest } from '../../shared/transport';
 
 async function pollJobStatus(
@@ -14,9 +15,11 @@ async function pollJobStatus(
 	while (true) {
 		const elapsed = Date.now() - startTime;
 		if (elapsed >= timeoutMs) {
-			throw new Error(
-				`Job polling timed out after ${pollTimeout} seconds. Job ID: ${jobId}. Check job status manually.`,
-			);
+			throw new NodeOperationError(this.getNode(), {
+				message: `Job polling timed out after ${pollTimeout} seconds. Job ID: ${jobId}`,
+				description:
+					'The appointment booking job did not complete within the specified timeout period. Increase the "Poll Timeout (Seconds)" parameter or check the job status manually using the job ID.',
+			});
 		}
 
 		try {
@@ -33,10 +36,11 @@ async function pollJobStatus(
 
 			if (status === 'error') {
 				const errorCode = jobStatus.errorCode || 'unknown_error';
-				const errorMessage = jobStatus.errorMessage || 'Job failed';
-				throw new Error(
-					`Job failed with status 'error'. Job ID: ${jobId}, Error Code: ${errorCode}, Message: ${errorMessage}`,
-				);
+				const errorMessage = jobStatus.errorMessage || 'The booking job could not be completed';
+				throw new NodeOperationError(this.getNode(), {
+					message: `Booking job could not be completed. Job ID: ${jobId}, Code: ${errorCode}`,
+					description: `${errorMessage}. Verify the connection ID, appointment details, and customer information are correct, then try again.`,
+				});
 			}
 
 			// Job still in progress (queued, leased, in_progress, waiting_2fa)
@@ -48,11 +52,8 @@ async function pollJobStatus(
 				}
 			}
 		} catch (error: unknown) {
-			// If it's our own error (timeout or job error), rethrow it
-			if (error instanceof Error && error.message.includes('Job polling timed out')) {
-				throw error;
-			}
-			if (error instanceof Error && error.message.includes('Job failed')) {
+			// If it's our own NodeOperationError (timeout or job error), rethrow it
+			if (error instanceof NodeOperationError) {
 				throw error;
 			}
 
@@ -143,7 +144,11 @@ export async function executeBookAppointment(
 
 			const jobId = actionResponse.jobId as string | undefined;
 			if (!jobId) {
-				throw new Error('No jobId returned from actions endpoint');
+				throw new NodeOperationError(this.getNode(), {
+					message: 'No job ID returned from the booking service',
+					description:
+						'The booking service did not return a job ID. Verify your connection ID and API credentials are correct, then try again.',
+				});
 			}
 
 			// Poll for job completion
@@ -155,15 +160,30 @@ export async function executeBookAppointment(
 			});
 		} catch (error: unknown) {
 			if (this.continueOnFail()) {
+				const errorMessage =
+					error instanceof NodeOperationError
+						? error.message
+						: error instanceof Error
+							? error.message
+							: 'An unexpected issue occurred while booking the appointment';
 				returnData.push({
 					json: {
-						error: error instanceof Error ? error.message : 'Unknown error',
+						error: errorMessage,
 					},
 					pairedItem: { item: i },
 				});
 				continue;
 			}
-			throw error;
+			if (error instanceof NodeOperationError) {
+				throw error;
+			}
+			throw new NodeOperationError(this.getNode(), {
+				message: 'An unexpected issue occurred while booking the appointment',
+				description:
+					error instanceof Error
+						? error.message
+						: 'Please verify your connection ID, appointment details, and API credentials, then try again.',
+			});
 		}
 	}
 

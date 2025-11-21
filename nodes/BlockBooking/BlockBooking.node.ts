@@ -66,13 +66,15 @@ export class BlockBooking implements INodeType {
 						name: 'Book Appointment',
 						value: 'bookAppointment',
 						action: 'Book an appointment',
-						description: 'Book an appointment at a merchant\'s booking system',
+						description:
+							'Create a new appointment booking for a customer at a merchant\'s booking system. Automatically polls for job completion.',
 					},
 					{
 						name: 'Get Availability',
 						value: 'getAvailability',
 						action: 'Get available appointment slots',
-						description: 'Query available appointment slots',
+						description:
+							'Retrieve a list of available time slots for appointments within a specified date range. Automatically polls for job completion.',
 					},
 				],
 				default: 'bookAppointment',

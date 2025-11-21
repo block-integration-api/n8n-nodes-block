@@ -1,0 +1,42 @@
+# Source files
+nodes/
+credentials/
+icons/
+
+# TypeScript configuration
+tsconfig.json
+*.tsbuildinfo
+
+# Development files
+eslint.config.mjs
+.prettierrc
+.prettierignore
+
+# Build and development
+node_modules/
+dist/tsconfig.tsbuildinfo
+
+# CI/CD
+.github/
+
+# Development scripts and configs
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__/
+test/
+
+# Documentation (keep README.md and LICENSE, they're included by default)
+docs/
+

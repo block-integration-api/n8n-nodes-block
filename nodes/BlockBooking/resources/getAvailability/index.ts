@@ -41,12 +41,13 @@ export const getAvailabilityDescription: INodeProperties[] = [
 		displayName: 'Provider',
 		name: 'provider',
 		type: 'string',
+		placeholder: 'e.g. JohnSmith',
 		default: '',
 		displayOptions: {
 			show: showOnlyForGetAvailability,
 		},
 		description:
-			'Provider name or identifier. If not provided, availability is aggregated across all providers.',
+			'Name or identifier of the service provider to check availability for. If not provided, availability is aggregated across all providers.',
 	},
 	{
 		displayName: 'Duration (Minutes)',

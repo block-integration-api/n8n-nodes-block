@@ -12,7 +12,7 @@ export class BlockApi implements ICredentialType {
 	icon = {
 		light: 'file:../icons/block.svg',
 		dark: 'file:../icons/block.dark.svg',
-	};
+	} as const;
 
 	displayName = 'Block API';
 
