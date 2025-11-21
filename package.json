@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-block",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Community n8n nodes for the Block API",
 	"license": "MIT",
 	"homepage": "https://github.com/block-integration-api/n8n-nodes-block",
