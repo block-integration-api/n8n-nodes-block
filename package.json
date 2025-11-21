@@ -9,11 +9,11 @@
 	],
 	"author": {
 		"name": "carl-laplace",
-		"email": "carl.morris@laplace-innovations.com"
+		"email": "carl.morris@useblock.tech"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/carlmorris/n8n-nodes-block.git"
+		"url": "https://github.com/block-integration-api/n8n-nodes-block.git"
 	},
 	"scripts": {
 		"build": "n8n-node build",
