@@ -9,6 +9,11 @@ import { BLOCK_API_BASE_URL } from '../nodes/BlockBooking/shared/config';
 export class BlockApi implements ICredentialType {
 	name = 'blockApi';
 
+	icon = {
+		light: 'file:../icons/block.svg',
+		dark: 'file:../icons/block.dark.svg',
+	};
+
 	displayName = 'Block API';
 
 	documentationUrl = 'https://www.useblock.tech/docs';

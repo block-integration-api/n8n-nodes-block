@@ -49,7 +49,7 @@ export const getAvailabilityDescription: INodeProperties[] = [
 			'Provider name or identifier. If not provided, availability is aggregated across all providers.',
 	},
 	{
-		displayName: 'Duration (minutes)',
+		displayName: 'Duration (Minutes)',
 		name: 'duration',
 		type: 'number',
 		typeOptions: {

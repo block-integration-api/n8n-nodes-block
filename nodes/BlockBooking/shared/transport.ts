@@ -15,7 +15,7 @@ export async function blockApiRequest(
 	endpoint: string,
 	body: IDataObject | undefined = undefined,
 	qs: IDataObject = {},
-): Promise<any> {
+): Promise<IDataObject | IDataObject[]> {
 	const options: IHttpRequestOptions = {
 		method,
 		qs,

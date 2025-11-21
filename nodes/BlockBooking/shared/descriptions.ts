@@ -11,7 +11,7 @@ export const connectionIdField: INodeProperties = {
 
 export const pollingConfigFields: INodeProperties[] = [
 	{
-		displayName: 'Poll Interval (seconds)',
+		displayName: 'Poll Interval (Seconds)',
 		name: 'pollInterval',
 		type: 'number',
 		typeOptions: {
@@ -22,7 +22,7 @@ export const pollingConfigFields: INodeProperties[] = [
 		description: 'How often to poll for job completion (in seconds)',
 	},
 	{
-		displayName: 'Poll Timeout (seconds)',
+		displayName: 'Poll Timeout (Seconds)',
 		name: 'pollTimeout',
 		type: 'number',
 		typeOptions: {

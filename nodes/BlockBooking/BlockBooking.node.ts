@@ -1,4 +1,10 @@
-import { NodeConnectionTypes, type INodeType, type INodeTypeDescription, type IExecuteFunctions } from 'n8n-workflow';
+import {
+	NodeConnectionTypes,
+	NodeOperationError,
+	type INodeType,
+	type INodeTypeDescription,
+	type IExecuteFunctions,
+} from 'n8n-workflow';
 import { bookAppointmentDescription, executeBookAppointment } from './resources/bookAppointment';
 import { getAvailabilityDescription, executeGetAvailability } from './resources/getAvailability';
 import { BLOCK_API_BASE_URL } from './shared/config';
@@ -89,7 +95,7 @@ export class BlockBooking implements INodeType {
 			}
 		}
 
-		throw new Error(`Unknown operation: ${operation} for resource: ${resource}`);
+		throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation} for resource: ${resource}`);
 	}
 }
 

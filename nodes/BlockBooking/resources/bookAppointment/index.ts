@@ -89,8 +89,8 @@ export const bookAppointmentDescription: INodeProperties[] = [
 						displayName: 'Email',
 						name: 'email',
 						type: 'string',
+						placeholder: 'name@email.com',
 						default: '',
-						required: false,
 						description: 'Customer email address',
 					},
 				],
@@ -98,7 +98,7 @@ export const bookAppointmentDescription: INodeProperties[] = [
 		],
 	},
 	{
-		displayName: 'Duration (minutes)',
+		displayName: 'Duration (Minutes)',
 		name: 'duration',
 		type: 'number',
 		typeOptions: {
@@ -131,7 +131,7 @@ export const bookAppointmentDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForBookAppointment,
 		},
-		description: 'Timezone ID (e.g., America/Los_Angeles). Defaults to America/Los_Angeles if not provided',
+		description: 'Timezone ID (e.g., America/Los_Angeles). Defaults to America/Los_Angeles if not provided.',
 	},
 	{
 		displayName: 'Service Address',
@@ -193,7 +193,6 @@ export const bookAppointmentDescription: INodeProperties[] = [
 						name: 'room',
 						type: 'string',
 						default: '',
-						required: false,
 						description: 'Room, apartment, or building number',
 					},
 				],
