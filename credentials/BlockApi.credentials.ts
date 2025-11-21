@@ -4,13 +4,14 @@ import type {
 	ICredentialType,
 	INodeProperties,
 } from 'n8n-workflow';
+import { BLOCK_API_BASE_URL } from '../nodes/BlockBooking/shared/config';
 
 export class BlockApi implements ICredentialType {
 	name = 'blockApi';
 
 	displayName = 'Block API';
 
-	documentationUrl = 'https://docs.useblock.tech';
+	documentationUrl = 'https://www.useblock.tech/docs';
 
 	properties: INodeProperties[] = [
 		{
@@ -20,14 +21,6 @@ export class BlockApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			required: true,
-		},
-		{
-			displayName: 'Base URL',
-			name: 'baseUrl',
-			type: 'string',
-			default: 'https://api.useblock.tech',
-			required: true,
-			description: 'Base URL for the Block API',
 		},
 	];
 
@@ -42,7 +35,7 @@ export class BlockApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: '={{$credentials?.baseUrl || "https://api.useblock.tech"}}',
+			baseURL: BLOCK_API_BASE_URL,
 			url: '/v1/connections',
 			method: 'GET',
 		},

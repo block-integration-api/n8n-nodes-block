@@ -1,6 +1,7 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription, type IExecuteFunctions } from 'n8n-workflow';
 import { bookAppointmentDescription, executeBookAppointment } from './resources/bookAppointment';
 import { getAvailabilityDescription, executeGetAvailability } from './resources/getAvailability';
+import { BLOCK_API_BASE_URL } from './shared/config';
 
 export class BlockBooking implements INodeType {
 	description: INodeTypeDescription = {
@@ -24,7 +25,7 @@ export class BlockBooking implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: '={{$credentials.baseUrl || "https://api.useblock.tech"}}',
+			baseURL: BLOCK_API_BASE_URL,
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
