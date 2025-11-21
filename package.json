@@ -8,8 +8,8 @@
 		"n8n-community-node-package"
 	],
 	"author": {
-		"name": "carl-laplace",
-		"email": "carl.morris@useblock.tech"
+		"name": "Block",
+		"email": "carl@useblock.tech"
 	},
 	"repository": {
 		"type": "git",
