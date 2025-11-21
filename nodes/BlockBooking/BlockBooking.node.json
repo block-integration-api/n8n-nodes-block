@@ -1,0 +1,19 @@
+{
+	"node": "n8n-nodes-block",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Productivity", "Communication"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.useblock.tech"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.useblock.tech"
+			}
+		]
+	}
+}
+

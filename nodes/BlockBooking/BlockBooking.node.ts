@@ -1,0 +1,94 @@
+import { NodeConnectionTypes, type INodeType, type INodeTypeDescription, type IExecuteFunctions } from 'n8n-workflow';
+import { bookAppointmentDescription, executeBookAppointment } from './resources/bookAppointment';
+import { getAvailabilityDescription, executeGetAvailability } from './resources/getAvailability';
+
+export class BlockBooking implements INodeType {
+	description: INodeTypeDescription = {
+		displayName: 'Block Booking',
+		name: 'blockBooking',
+		icon: { light: 'file:../../icons/block.svg', dark: 'file:../../icons/block.dark.svg' },
+		group: ['transform'],
+		version: 1,
+		subtitle: '={{$parameter["operation"]}}',
+		description: 'Book appointments and check availability using the Block API',
+		defaults: {
+			name: 'Block Booking',
+		},
+		usableAsTool: true,
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
+		credentials: [
+			{
+				name: 'blockApi',
+				required: true,
+			},
+		],
+		requestDefaults: {
+			baseURL: '={{$credentials.baseUrl || "https://api.useblock.tech"}}',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+		},
+		properties: [
+			{
+				displayName: 'Resource',
+				name: 'resource',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{
+						name: 'Booking',
+						value: 'booking',
+					},
+				],
+				default: 'booking',
+			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['booking'],
+					},
+				},
+				options: [
+					{
+						name: 'Book Appointment',
+						value: 'bookAppointment',
+						action: 'Book an appointment',
+						description: 'Book an appointment at a merchant\'s booking system',
+					},
+					{
+						name: 'Get Availability',
+						value: 'getAvailability',
+						action: 'Get available appointment slots',
+						description: 'Query available appointment slots',
+					},
+				],
+				default: 'bookAppointment',
+			},
+			...bookAppointmentDescription,
+			...getAvailabilityDescription,
+		],
+	};
+
+	async execute(this: IExecuteFunctions) {
+		const operation = this.getNodeParameter('operation', 0) as string;
+		const resource = this.getNodeParameter('resource', 0) as string;
+
+		if (resource === 'booking') {
+			if (operation === 'bookAppointment') {
+				return executeBookAppointment.call(this);
+			}
+			if (operation === 'getAvailability') {
+				return executeGetAvailability.call(this);
+			}
+		}
+
+		throw new Error(`Unknown operation: ${operation} for resource: ${resource}`);
+	}
+}
+
